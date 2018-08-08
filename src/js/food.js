@@ -1,6 +1,7 @@
 let map;
 const localContent = document.querySelector('.card-columns');
 const searchData = document.getElementById('searchData');
+const cardRow = document.getElementById('card-row')
 
 const localUser = () => {
 if (navigator.geolocation) {
@@ -52,15 +53,15 @@ const callback = (results, status) => {
   searchData.addEventListener('keyup', () => {
     const data = searchData.value;
     let result2 = filterFood(results, data);
-    cardContent.innerHTML = ''
+    cardRow.innerHTML = ''
     result2.forEach(element => {
-      createCard(element);
+      createCardRow(element);
     })
   })
 }
 
 
-const madeMarker = (place) => {
+/*const madeMarker = (place) => {
   console.log(place);
   let placeLoc = place.geometry.location;
   let marker = new google.maps.Marker({
@@ -68,8 +69,39 @@ const madeMarker = (place) => {
     position: placeLoc
   });
 
+}*/
+const madeMarker = (place) => {
+    let marker = new google.maps.Marker({
+        position: place.geometry.location,
+        map: map,
+    });
+    createCardRow(place);
+    google.maps.event.addListener(marker, 'click', () => {
+        infoWindow.setContent(place.name);
+        infoWindow.open(map, marker);
+    });
 }
 
-
-
+const createCardRow = (place) => {
+    let photos = place.photos;
+    if (!photos) {
+        return;
+    }
+    cardRow.innerHTML +=
+    `<div class="col s6 m4 l3 card">
+        <div class="card-image">
+          <img class="activator responsive-img" src="${photos[0].getUrl({ 'maxWidth': 200, 'maxHeight': 250 })}">
+        </div>
+        <div class="card-content">
+          <span class="card-title">${place.name}</span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">${place.name}<i class="material-icons right">close</i></span>
+          <p>Rating: ${place.rating} puntos</p>
+          <p>Dirección: ${place.vicinity} </p>
+          <p>Dirección: ${place.locationUser} </p>
+          <div style="width: 100px; height: 100px;" id="map_canvas${place.id}"></div>
+         </div>
+      </div>`
+    };
 localUser();
