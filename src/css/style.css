@@ -40,7 +40,12 @@
 
 
 #map{
-  width: 50%;
-       height: 400px;
-       background-color: grey;
+ height: 400px;
+}
+body{
+font-family: 'Megrim', cursive;
+background-image: url('https://image.freepik.com/foto-gratis/textura-de-la-pared-de-ladrillo-negro_1194-7284.jpg');
+repeat: fixed;
+    background-size: cover;
+    background-position: 50%;
 }

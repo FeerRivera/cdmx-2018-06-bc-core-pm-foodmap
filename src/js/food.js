@@ -61,15 +61,6 @@ const callback = (results, status) => {
 }
 
 
-/*const madeMarker = (place) => {
-  console.log(place);
-  let placeLoc = place.geometry.location;
-  let marker = new google.maps.Marker({
-    map: map,
-    position: placeLoc
-  });
-
-}*/
 const madeMarker = (place) => {
     let marker = new google.maps.Marker({
         position: place.geometry.location,
@@ -95,13 +86,36 @@ const createCardRow = (place) => {
         <div class="card-content">
           <span class="card-title">${place.name}</span>
         </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">${place.name}<i class="material-icons right">close</i></span>
-          <p>Rating: ${place.rating} puntos</p>
-          <p>Dirección: ${place.vicinity} </p>
-          <p>Dirección: ${place.locationUser} </p>
-          <div style="width: 100px; height: 100px;" id="map_canvas${place.id}"></div>
-         </div>
-      </div>`
+
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#${place.id}">
+  Mas info
+    </button>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="${place.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> ${place.name}</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="CERRAR">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+      ${place.vicinity}
+<p>Rating: ${place.rating} puntos</p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+
+      </div>
+    </div>
+  </div>
+</div>`
     };
 localUser();
